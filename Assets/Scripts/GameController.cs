@@ -15,8 +15,8 @@ public class GameController: MonoBehaviour
 
     public TextMeshProUGUI mainText;
 
-    public enum ColourOptions { red, blue, green, yellow, white, grey };
-    int numColours = 6;
+    public enum ColourOptions { red, blue, green, yellow };//, white, grey };
+    int numColours = 4;
     public ColourOptions colourChosen;
 
     void Start()
@@ -25,10 +25,10 @@ public class GameController: MonoBehaviour
         colourInfo.Add("blue", Color.blue);
         colourInfo.Add("green", Color.green);
         colourInfo.Add("yellow", Color.yellow);
-        colourInfo.Add("white", Color.white);
-        colourInfo.Add("grey", Color.grey);
+        //colourInfo.Add("white", Color.white);
+        //colourInfo.Add("grey", Color.grey);
 
-        foreach (KeyValuePair<string,Color> pair in colourInfo)
+        foreach (KeyValuePair<string, Color> pair in colourInfo)
         {
             print(pair.Key + "-" + pair.Value);
         }
@@ -44,13 +44,29 @@ public class GameController: MonoBehaviour
     public void CreateQuestion()
     {
         Color chosenColour;
-        colourInfo.TryGetValue(RandomizeColour(), out chosenColour);
+        string textValue;
+        int temp = Random.Range(0, numColours);
+
+        int temp2;
+        do
+        {
+            temp2 = Random.Range(0, numColours);
+            print(temp + "--" + temp2);
+        }
+        while (temp2 == temp);
+        //if (temp2 == temp)
+        //{
+        //    temp2 = Random.Range(0, numColours);
+        //}
+
+        colourInfo.TryGetValue(RandomizeColour(temp), out chosenColour);
         mainText.color = chosenColour;
+        colourInfo.TryGetValue(RandomizeColour(temp), out textValue);
+        mainText.text = textValue;
     }
 
-    public string RandomizeColour()
+    public string RandomizeColour(int temp)
     {
-        int temp = Random.Range(0, numColours);
         colourChosen = (ColourOptions)temp;
         return colourChosen.ToString();
     }
