@@ -15,18 +15,18 @@ public class GameController: MonoBehaviour
 
     public TextMeshProUGUI mainText;
 
-    public enum ColourOptions { red, blue, green, yellow };//, white, grey };
-    int numColours = 4;
+    public enum ColourOptions { Red, Blue, Green, Yellow , White, Grey };
+    int numColours = 6;
     public ColourOptions colourChosen;
 
     void Start()
     {
-        colourInfo.Add("red", Color.red);
-        colourInfo.Add("blue", Color.blue);
-        colourInfo.Add("green", Color.green);
-        colourInfo.Add("yellow", Color.yellow);
-        //colourInfo.Add("white", Color.white);
-        //colourInfo.Add("grey", Color.grey);
+        colourInfo.Add("Red", Color.red);
+        colourInfo.Add("Blue", Color.blue);
+        colourInfo.Add("Green", Color.green);
+        colourInfo.Add("Yellow", Color.yellow);
+        colourInfo.Add("White", Color.white);
+        colourInfo.Add("Grey", Color.grey);
 
         foreach (KeyValuePair<string, Color> pair in colourInfo)
         {
@@ -38,13 +38,15 @@ public class GameController: MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            CreateQuestion();
+        }
     }
 
     public void CreateQuestion()
     {
         Color chosenColour;
-        string textValue;
         int temp = Random.Range(0, numColours);
 
         int temp2;
@@ -54,15 +56,18 @@ public class GameController: MonoBehaviour
             print(temp + "--" + temp2);
         }
         while (temp2 == temp);
-        //if (temp2 == temp)
-        //{
-        //    temp2 = Random.Range(0, numColours);
-        //}
+
+        if (temp == temp2)
+        {
+            print("Should not get here");
+        }
+
+        print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
 
         colourInfo.TryGetValue(RandomizeColour(temp), out chosenColour);
         mainText.color = chosenColour;
-        colourInfo.TryGetValue(RandomizeColour(temp), out textValue);
-        mainText.text = textValue;
+        //mainText.color = mainText.color + new Color(1,1,1,1);
+        mainText.text = RandomizeColour(temp2);
     }
 
     public string RandomizeColour(int temp)
