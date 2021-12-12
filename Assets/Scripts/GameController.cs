@@ -25,8 +25,11 @@ public class GameController: MonoBehaviour
     int numColours = 6;
     public ColourOptions colourChosen;
 
+    int randomColourInt;
+
     void Start()
     {
+        //add colours and text to dictionary for use later
         colourInfo.Add("Red", Color.red);
         colourInfo.Add("Blue", Color.blue);
         colourInfo.Add("Green", Color.green);
@@ -34,6 +37,7 @@ public class GameController: MonoBehaviour
         colourInfo.Add("White", Color.white);
         colourInfo.Add("Grey", Color.grey);
 
+        //check data was inputted correctly into dictionary
         foreach (KeyValuePair<string, Color> pair in colourInfo)
         {
             print(pair.Key + "-" + pair.Value);
@@ -44,6 +48,7 @@ public class GameController: MonoBehaviour
 
     void Update()
     {
+        //reset main text to test random combinations
         if (Input.GetKeyDown(KeyCode.W))
         {
             CreateQuestion();
@@ -56,6 +61,7 @@ public class GameController: MonoBehaviour
         int temp = Random.Range(0, numColours);
         int temp2;
 
+        //loop to make sure colour of text and text are different
         do
         {
             temp2 = Random.Range(0, numColours);
@@ -67,9 +73,10 @@ public class GameController: MonoBehaviour
         {
             print("Should not get here");
         }
-
+        randomColourInt = temp;
         print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
 
+        //sets the text and texts colour of the main text
         colourInfo.TryGetValue(RandomizeColour(temp), out chosenColour);
         mainText.color = chosenColour;
         mainText.text = RandomizeColour(temp2);
@@ -87,6 +94,9 @@ public class GameController: MonoBehaviour
 
     public void ChosenAnswer(int answer)
     {
+        if (randomColourInt == answer)
+        {
 
+        }
     }
 }
