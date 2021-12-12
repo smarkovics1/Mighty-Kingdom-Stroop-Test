@@ -21,8 +21,8 @@ public class GameController: MonoBehaviour
 
     public TextMeshProUGUI mainText;
 
-    public enum ColourOptions { Red, Blue, Green, Yellow , White, Grey };
-    int numColours = 6;
+    public enum ColourOptions { Red, Blue, Green, Yellow };// , White, Grey };
+    int numColours = 4;
     public ColourOptions colourChosen;
 
     int randomColourInt;
@@ -34,8 +34,8 @@ public class GameController: MonoBehaviour
         colourInfo.Add("Blue", Color.blue);
         colourInfo.Add("Green", Color.green);
         colourInfo.Add("Yellow", Color.yellow);
-        colourInfo.Add("White", Color.white);
-        colourInfo.Add("Grey", Color.grey);
+        //colourInfo.Add("White", Color.white);
+        //colourInfo.Add("Grey", Color.grey);
 
         //check data was inputted correctly into dictionary
         foreach (KeyValuePair<string, Color> pair in colourInfo)
@@ -57,7 +57,7 @@ public class GameController: MonoBehaviour
 
     public void CreateQuestion()
     {
-        Color chosenColour;
+        
         int temp = Random.Range(0, numColours);
         int temp2;
 
@@ -77,10 +77,21 @@ public class GameController: MonoBehaviour
         print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
 
         //sets the text and texts colour of the main text
-        colourInfo.TryGetValue(RandomizeColour(temp), out chosenColour);
-        mainText.color = chosenColour;
-        mainText.text = RandomizeColour(temp2);
+        SetMainText(temp2, temp);
 
+        for (int i = 0; i < buttonSelect.Length; i++)
+        {
+            buttonSelect[i].buttonNumber = i;
+            //button.buttonNumber = Random.Range(0, numColours);
+            buttonSelect[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(i);
+        }
+        //foreach(SelectButton button in buttonSelect)
+        //{
+        //    button.buttonNumber = Random.Range(0, numColours);
+        //    button.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(button.buttonNumber);
+        //}
+        //buttonSelect[RandomButton].buttonNumber = temp2;
+       // buttonSelect[RandomButton].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(buttonSelect[RandomButton].buttonNumber);        
     }
 
     public string RandomizeColour(int temp)
@@ -92,11 +103,33 @@ public class GameController: MonoBehaviour
         return colourChosen.ToString();
     }
 
+    public void SetMainText(int textColour, int text)
+    {
+        Color chosenColour;
+        colourInfo.TryGetValue(RandomizeColour(text), out chosenColour);
+        mainText.color = chosenColour;
+        mainText.text = RandomizeColour(textColour);
+    }
+
+    public string SetMainText(int textColour)
+    {
+        Color chosenColour;
+        colourInfo.TryGetValue(RandomizeColour(textColour), out chosenColour);
+        //mainText.color = chosenColour;
+        return RandomizeColour(textColour);
+    }
+
     public void ChosenAnswer(int answer)
     {
         if (randomColourInt == answer)
         {
+            print("correct");
+            CreateQuestion();
 
+        }
+        else
+        {
+            print("incorrect");
         }
     }
 }

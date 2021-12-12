@@ -1145,6 +1145,11 @@ MonoBehaviour:
   button2: {fileID: 487813693}
   button3: {fileID: 777984037}
   button4: {fileID: 1496477868}
+  buttonSelect:
+  - {fileID: 409654168}
+  - {fileID: 487813698}
+  - {fileID: 777984042}
+  - {fileID: 1496477873}
   mainText: {fileID: 190234221}
   colourChosen: 0
 --- !u!4 &1122504231
