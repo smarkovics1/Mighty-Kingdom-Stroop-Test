@@ -12,6 +12,12 @@ public class GameController: MonoBehaviour
     public GameObject button2;
     public GameObject button3;
     public GameObject button4;
+    //public SelectButton button1Select;
+    //public SelectButton button2Select;
+    //public SelectButton button3Select;
+    //public SelectButton button4Select;
+
+    public SelectButton[] buttonSelect;
 
     public TextMeshProUGUI mainText;
 
@@ -48,8 +54,8 @@ public class GameController: MonoBehaviour
     {
         Color chosenColour;
         int temp = Random.Range(0, numColours);
-
         int temp2;
+
         do
         {
             temp2 = Random.Range(0, numColours);
@@ -66,13 +72,21 @@ public class GameController: MonoBehaviour
 
         colourInfo.TryGetValue(RandomizeColour(temp), out chosenColour);
         mainText.color = chosenColour;
-        //mainText.color = mainText.color + new Color(1,1,1,1);
         mainText.text = RandomizeColour(temp2);
+
     }
 
     public string RandomizeColour(int temp)
     {
+        //sets the enum colour chosen to the inputted value
         colourChosen = (ColourOptions)temp;
+
+        //returns text string to find dictionary key
         return colourChosen.ToString();
+    }
+
+    public void ChosenAnswer(int answer)
+    {
+
     }
 }

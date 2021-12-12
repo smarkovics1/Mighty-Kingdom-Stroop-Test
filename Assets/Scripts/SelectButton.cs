@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class SelectButton : MonoBehaviour
 {
-    public GameController gc;
+    private GameController gc;
+    public int buttonNumber;
 
     public void Start()
     {
         gc = FindObjectOfType<GameController>();
+    }
+
+
+    public void SelectAnswer()
+    {
+        gc.ChosenAnswer(buttonNumber);
+        print(buttonNumber + "----" + gameObject.name);
     }
 }
