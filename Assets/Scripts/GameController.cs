@@ -15,15 +15,20 @@ public class GameController: MonoBehaviour
 
     public TextMeshProUGUI totalCorrect;
     public TextMeshProUGUI totalIncorrect;
+    public TextMeshProUGUI scoreResult;
     int correct = 0;
     int inCorrect = 0;
     int roundNumber = 0;
+    int score = 0;
 
     public enum ColourOptions { Red, Blue, Green, Yellow };
     int numColours = 4;
     public ColourOptions colourChosen;
 
     int randomColourInt;
+
+    public GameObject mainScreen;
+    public GameObject resultScreen;
 
     void Start()
     {
@@ -33,11 +38,10 @@ public class GameController: MonoBehaviour
         colourInfo.Add("Green", Color.green);
         colourInfo.Add("Yellow", Color.yellow);
 
-
         //check data was inputted correctly into dictionary
         foreach (KeyValuePair<string, Color> pair in colourInfo)
         {
-            print(pair.Key + "-" + pair.Value);
+            print(pair.Key + "------" + pair.Value);
         }
 
         //sets the button values and text
@@ -62,7 +66,6 @@ public class GameController: MonoBehaviour
 
     public void CreateQuestion()
     {
-
         roundNumber++;
         int temp = Random.Range(0, numColours);
         int temp2;
@@ -71,7 +74,7 @@ public class GameController: MonoBehaviour
         do
         {
             temp2 = Random.Range(0, numColours);
-            print(temp + "--" + temp2);
+            //print(temp + "--" + temp2);
         }
         while (temp2 == temp);
 
@@ -80,7 +83,7 @@ public class GameController: MonoBehaviour
             print("Should not get here");
         }
         randomColourInt = temp;
-        print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
+        //print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
 
         //sets the text and texts colour of the main text
         SetMainText(temp2, temp);
@@ -118,26 +121,25 @@ public class GameController: MonoBehaviour
             print("correct");
             correct++;
             CreateQuestion();
-
+            CheckRoundNumber();
         }
         else
         {
             inCorrect++;
             print("incorrect");
+            CheckRoundNumber();
         }
     }
 
-    public bool CheckRoundNumber()
+    public void CheckRoundNumber()
     {
         if (roundNumber == 10)
         {
-            return false;
-        }
-        else
-        {
-            return true;
+            resultScreen.SetActive(true);
+            mainScreen.SetActive(false);
+            totalCorrect.text = correct + " correct answers";
+            totalIncorrect.text = inCorrect + " incorrect answers";
+            scoreResult.text = score.ToString();
         }
     }
-
-
 }
