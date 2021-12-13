@@ -12,16 +12,12 @@ public class GameController: MonoBehaviour
     public GameObject button2;
     public GameObject button3;
     public GameObject button4;
-    //public SelectButton button1Select;
-    //public SelectButton button2Select;
-    //public SelectButton button3Select;
-    //public SelectButton button4Select;
 
     public SelectButton[] buttonSelect;
 
     public TextMeshProUGUI mainText;
 
-    public enum ColourOptions { Red, Blue, Green, Yellow };// , White, Grey };
+    public enum ColourOptions { Red, Blue, Green, Yellow };
     int numColours = 4;
     public ColourOptions colourChosen;
 
@@ -34,13 +30,19 @@ public class GameController: MonoBehaviour
         colourInfo.Add("Blue", Color.blue);
         colourInfo.Add("Green", Color.green);
         colourInfo.Add("Yellow", Color.yellow);
-        //colourInfo.Add("White", Color.white);
-        //colourInfo.Add("Grey", Color.grey);
+
 
         //check data was inputted correctly into dictionary
         foreach (KeyValuePair<string, Color> pair in colourInfo)
         {
             print(pair.Key + "-" + pair.Value);
+        }
+
+        //sets the button values and text
+        for (int i = 0; i < buttonSelect.Length; i++)
+        {
+            buttonSelect[i].buttonNumber = i;
+            buttonSelect[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(i);
         }
 
         CreateQuestion();
@@ -79,19 +81,8 @@ public class GameController: MonoBehaviour
         //sets the text and texts colour of the main text
         SetMainText(temp2, temp);
 
-        for (int i = 0; i < buttonSelect.Length; i++)
-        {
-            buttonSelect[i].buttonNumber = i;
-            //button.buttonNumber = Random.Range(0, numColours);
-            buttonSelect[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(i);
-        }
-        //foreach(SelectButton button in buttonSelect)
-        //{
-        //    button.buttonNumber = Random.Range(0, numColours);
-        //    button.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(button.buttonNumber);
-        //}
-        //buttonSelect[RandomButton].buttonNumber = temp2;
-       // buttonSelect[RandomButton].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(buttonSelect[RandomButton].buttonNumber);        
+        
+
     }
 
     public string RandomizeColour(int temp)
