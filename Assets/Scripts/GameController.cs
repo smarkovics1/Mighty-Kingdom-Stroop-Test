@@ -5,17 +5,19 @@ using TMPro;
 
 public class GameController: MonoBehaviour
 {
-    public Dictionary<string, Color> colourInfo = new Dictionary<string, Color>();
+    private Dictionary<string, Color> colourInfo = new Dictionary<string, Color>();
 
     [Header("Answer Buttons")]
-    public GameObject button1;
-    public GameObject button2;
-    public GameObject button3;
-    public GameObject button4;
-
+    public GameObject[] buttons;
     public SelectButton[] buttonSelect;
 
     public TextMeshProUGUI mainText;
+
+    public TextMeshProUGUI totalCorrect;
+    public TextMeshProUGUI totalIncorrect;
+    int correct = 0;
+    int inCorrect = 0;
+    int roundNumber = 0;
 
     public enum ColourOptions { Red, Blue, Green, Yellow };
     int numColours = 4;
@@ -55,11 +57,13 @@ public class GameController: MonoBehaviour
         {
             CreateQuestion();
         }
+
     }
 
     public void CreateQuestion()
     {
-        
+
+        roundNumber++;
         int temp = Random.Range(0, numColours);
         int temp2;
 
@@ -80,9 +84,6 @@ public class GameController: MonoBehaviour
 
         //sets the text and texts colour of the main text
         SetMainText(temp2, temp);
-
-        
-
     }
 
     public string RandomizeColour(int temp)
@@ -115,12 +116,28 @@ public class GameController: MonoBehaviour
         if (randomColourInt == answer)
         {
             print("correct");
+            correct++;
             CreateQuestion();
 
         }
         else
         {
+            inCorrect++;
             print("incorrect");
         }
     }
+
+    public bool CheckRoundNumber()
+    {
+        if (roundNumber == 10)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
 }
