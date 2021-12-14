@@ -16,6 +16,6 @@ public class SelectButton : MonoBehaviour
     public void SelectAnswer()
     {
         gc.ChosenAnswer(buttonNumber);
-        print(buttonNumber + "----" + gameObject.name);
+        //print(buttonNumber + "----" + gameObject.name);
     }
 }

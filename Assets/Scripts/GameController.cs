@@ -30,8 +30,12 @@ public class GameController: MonoBehaviour
     public GameObject mainScreen;
     public GameObject resultScreen;
 
+    //Timer Variables
+    float timer = 0f;
+
     void Start()
     {
+        score = 0;
         //add colours and text to dictionary for use later
         colourInfo.Add("Red", Color.red);
         colourInfo.Add("Blue", Color.blue);
@@ -39,10 +43,10 @@ public class GameController: MonoBehaviour
         colourInfo.Add("Yellow", Color.yellow);
 
         //check data was inputted correctly into dictionary
-        foreach (KeyValuePair<string, Color> pair in colourInfo)
-        {
-            print(pair.Key + "------" + pair.Value);
-        }
+        //foreach (KeyValuePair<string, Color> pair in colourInfo)
+        //{
+        //    print(pair.Key + "------" + pair.Value);
+        //}
 
         //sets the button values and text
         for (int i = 0; i < buttonSelect.Length; i++)
@@ -54,19 +58,20 @@ public class GameController: MonoBehaviour
         CreateQuestion();
     }
 
-    void Update()
+    public void Update()
     {
         //reset main text to test random combinations
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            CreateQuestion();
-        }
-
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    CreateQuestion();
+        //}
+        timer += Time.deltaTime;
     }
 
     public void CreateQuestion()
     {
-        roundNumber++;
+        timer = 0f;
+
         int temp = Random.Range(0, numColours);
         int temp2;
 
@@ -84,7 +89,7 @@ public class GameController: MonoBehaviour
         }
         randomColourInt = temp;
         //print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
-
+        print(RandomizeColour(temp));
         //sets the text and texts colour of the main text
         SetMainText(temp2, temp);
     }
@@ -102,6 +107,7 @@ public class GameController: MonoBehaviour
     {
         Color chosenColour;
         colourInfo.TryGetValue(RandomizeColour(text), out chosenColour);
+
         mainText.color = chosenColour;
         mainText.text = RandomizeColour(textColour);
     }
@@ -116,30 +122,62 @@ public class GameController: MonoBehaviour
 
     public void ChosenAnswer(int answer)
     {
+        roundNumber++;
         if (randomColourInt == answer)
         {
-            print("correct");
+            //print("correct");
             correct++;
+            AddScore();
             CreateQuestion();
-            CheckRoundNumber();
+
+
         }
         else
         {
             inCorrect++;
-            print("incorrect");
-            CheckRoundNumber();
+            //print("incorrect");
+            CreateQuestion();
         }
+        CheckRoundNumber();
     }
 
     public void CheckRoundNumber()
     {
+        //checks round number
         if (roundNumber == 10)
         {
+            //switches screen to results and sets values
             resultScreen.SetActive(true);
             mainScreen.SetActive(false);
             totalCorrect.text = correct + " correct answers";
             totalIncorrect.text = inCorrect + " incorrect answers";
             scoreResult.text = score.ToString();
         }
+    }
+
+    public void AddScore()
+    {
+        if (timer < 0.35f)
+        {
+            print(timer + "here is 100 points0");
+            score += 100;
+        }
+        else if (timer >= 0.35f && timer < 0.45f)
+        {
+            score += 80;
+        }
+        else if (timer >= 0.45f && timer < 0.55f)
+        {
+            score += 60;
+        }
+        else if (timer >= 0.55f && timer < 0.75f)
+        {
+            score += 40;
+        }
+        else
+        {
+            score += 20;
+        }
+        print(score);
     }
 }
