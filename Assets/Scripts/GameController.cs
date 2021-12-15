@@ -5,6 +5,7 @@ using TMPro;
 
 public class GameController: MonoBehaviour
 {
+    //dictionary for storing colour and colour name
     private Dictionary<string, Color> colourInfo = new Dictionary<string, Color>();
 
     [Header("Answer Buttons")]
@@ -25,7 +26,7 @@ public class GameController: MonoBehaviour
     int score = 0;
 
     public enum ColourOptions { Red, Blue, Green, Yellow };
-    int numColours = 4;
+    private int numColours = 4;
     public ColourOptions colourChosen;
 
     int randomColourInt;
@@ -52,19 +53,20 @@ public class GameController: MonoBehaviour
             buttonSelect[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = SetMainText(i);
         }
 
+        //setup first Question for player
         CreateQuestion();
     }
 
     public void Update()
     {
+        //timer run and display time taken to player
         timer += Time.deltaTime;
-
         timerText.text = "Time: "+ timer.ToString("F1");
-        
     }
 
     public void CreateQuestion()
     {
+        //reset timer for each question
         timer = 0f;
 
         int temp = Random.Range(0, numColours);
@@ -77,8 +79,10 @@ public class GameController: MonoBehaviour
         }
         while (temp2 == temp);
 
+        //set correct answer value
         randomColourInt = temp;
         print(RandomizeColour(temp));
+
         //sets the text and texts colour of the main text
         SetMainText(temp2, temp);
     }
@@ -94,35 +98,49 @@ public class GameController: MonoBehaviour
 
     public void SetMainText(int textColour, int text)
     {
-        Color chosenColour;
-        colourInfo.TryGetValue(RandomizeColour(text), out chosenColour);
+        //finds the colour value from the key input
+        colourInfo.TryGetValue(RandomizeColour(text), out Color chosenColour);
 
+        //set the colour to output from string
         mainText.color = chosenColour;
+
+        //set the text to different colour than text colour
         mainText.text = RandomizeColour(textColour);
     }
 
     public string SetMainText(int textColour)
     {
-        Color chosenColour;
-        colourInfo.TryGetValue(RandomizeColour(textColour), out chosenColour);
-        //mainText.color = chosenColour;
+        //colourInfo.TryGetValue(RandomizeColour(textColour), out Color chosenColour);
         return RandomizeColour(textColour);
     }
 
     public void ChosenAnswer(int answer)
     {
+        //add to round number
         roundNumber++;
+
+        //check input from button
         if (randomColourInt == answer)
         {
+            //add to correct;
             correct++;
+            
+            //add score depending on time
             AddScore();
+
+            //create new question
             CreateQuestion();
         }
         else
         {
+            //add to incorrect
             inCorrect++;
+            
+            //create new question
             CreateQuestion();
         }
+
+        //check that game has completed
         CheckRoundNumber();
     }
 
@@ -142,39 +160,21 @@ public class GameController: MonoBehaviour
 
     public void AddScore()
     {
-        float addScore = 0f;
-        addScore = 10 - timer;
+        //score value less than 10
+        float addScore = 10 - timer;
 
+        //if greater than 10 seconds add 1 score
         if (addScore < 0)
         {
             score += 1;
         }
+        //add normal score
         else
         {
-            score += (int)addScore +1;
+            score += (int)addScore + 1;
         }
-        //if (timer < 0.5f)
-        //{
-        //    score += 100;
-        //}
-        //else if (timer >= 0.5f && timer < 0.65f)
-        //{
-        //    score += 80;
-        //}
-        //else if (timer >= 0.65f && timer < 0.75f)
-        //{
-        //    score += 60;
-        //}
-        //else if (timer >= 0.75f && timer < 0.85f)
-        //{
-        //    score += 40;
-        //}
-        //else
-        //{
-        //    score += 20;
-        //}
 
-        print(score);
+        //change score text to new score
         scoreText.text = "Score: " + score;
     }
 }
