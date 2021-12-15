@@ -44,12 +44,6 @@ public class GameController: MonoBehaviour
         colourInfo.Add("Green", Color.green);
         colourInfo.Add("Yellow", Color.yellow);
 
-        //check data was inputted correctly into dictionary
-        //foreach (KeyValuePair<string, Color> pair in colourInfo)
-        //{
-        //    print(pair.Key + "------" + pair.Value);
-        //}
-
         //sets the button values and text
         for (int i = 0; i < buttonSelect.Length; i++)
         {
@@ -62,11 +56,6 @@ public class GameController: MonoBehaviour
 
     public void Update()
     {
-        //reset main text to test random combinations
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    CreateQuestion();
-        //}
         timer += Time.deltaTime;
     }
 
@@ -81,16 +70,10 @@ public class GameController: MonoBehaviour
         do
         {
             temp2 = Random.Range(0, numColours);
-            //print(temp + "--" + temp2);
         }
         while (temp2 == temp);
 
-        if (temp == temp2)
-        {
-            print("Should not get here");
-        }
         randomColourInt = temp;
-        //print(temp + "-temp 1 value-" + temp2 + "-temp 2 value-");
         print(RandomizeColour(temp));
         //sets the text and texts colour of the main text
         SetMainText(temp2, temp);
@@ -127,17 +110,13 @@ public class GameController: MonoBehaviour
         roundNumber++;
         if (randomColourInt == answer)
         {
-            //print("correct");
             correct++;
             AddScore();
             CreateQuestion();
-
-
         }
         else
         {
             inCorrect++;
-            //print("incorrect");
             CreateQuestion();
         }
         CheckRoundNumber();
@@ -181,6 +160,6 @@ public class GameController: MonoBehaviour
         }
 
         print(score);
-        scoreText.text = score + " score";
+        scoreText.text = "Score:" + score;
     }
 }
