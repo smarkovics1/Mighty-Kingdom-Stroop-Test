@@ -154,7 +154,7 @@ public class GameController: MonoBehaviour
             mainScreen.SetActive(false);
             totalCorrect.text = correct + " correct answers";
             totalIncorrect.text = inCorrect + " incorrect answers";
-            scoreResult.text = score.ToString();
+            scoreResult.text = score.ToString() + " / 100";
         }
     }
 
