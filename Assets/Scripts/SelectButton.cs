@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectButton : MonoBehaviour
 {
@@ -12,10 +13,18 @@ public class SelectButton : MonoBehaviour
         gc = FindObjectOfType<GameController>();
     }
 
-
     public void SelectAnswer()
     {
         gc.ChosenAnswer(buttonNumber);
-        //print(buttonNumber + "----" + gameObject.name);
+    }
+
+    public void NewGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QUITMAINMENU()
+    {
+        SceneManager.LoadScene(0);
     }
 }

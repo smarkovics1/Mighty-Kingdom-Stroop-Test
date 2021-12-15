@@ -8,14 +8,16 @@ public class GameController: MonoBehaviour
     private Dictionary<string, Color> colourInfo = new Dictionary<string, Color>();
 
     [Header("Answer Buttons")]
-    public GameObject[] buttons;
     public SelectButton[] buttonSelect;
 
+    [Header("Text Variables")]
     public TextMeshProUGUI mainText;
-
     public TextMeshProUGUI totalCorrect;
     public TextMeshProUGUI totalIncorrect;
     public TextMeshProUGUI scoreResult;
+    public TextMeshProUGUI scoreText;
+
+    //scoring variables
     int correct = 0;
     int inCorrect = 0;
     int roundNumber = 0;
@@ -157,20 +159,19 @@ public class GameController: MonoBehaviour
 
     public void AddScore()
     {
-        if (timer < 0.35f)
+        if (timer < 0.5f)
         {
-            print(timer + "here is 100 points0");
             score += 100;
         }
-        else if (timer >= 0.35f && timer < 0.45f)
+        else if (timer >= 0.5f && timer < 0.65f)
         {
             score += 80;
         }
-        else if (timer >= 0.45f && timer < 0.55f)
+        else if (timer >= 0.65f && timer < 0.75f)
         {
             score += 60;
         }
-        else if (timer >= 0.55f && timer < 0.75f)
+        else if (timer >= 0.75f && timer < 0.85f)
         {
             score += 40;
         }
@@ -178,6 +179,8 @@ public class GameController: MonoBehaviour
         {
             score += 20;
         }
+
         print(score);
+        scoreText.text = score + " score";
     }
 }
