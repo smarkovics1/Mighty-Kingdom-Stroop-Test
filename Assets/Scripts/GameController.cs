@@ -16,6 +16,7 @@ public class GameController: MonoBehaviour
     public TextMeshProUGUI totalIncorrect;
     public TextMeshProUGUI scoreResult;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
 
     //scoring variables
     int correct = 0;
@@ -57,6 +58,9 @@ public class GameController: MonoBehaviour
     public void Update()
     {
         timer += Time.deltaTime;
+
+        timerText.text = "Time: "+ timer.ToString("F1");
+        
     }
 
     public void CreateQuestion()
@@ -138,28 +142,39 @@ public class GameController: MonoBehaviour
 
     public void AddScore()
     {
-        if (timer < 0.5f)
+        float addScore = 0f;
+        addScore = 10 - timer;
+
+        if (addScore < 0)
         {
-            score += 100;
-        }
-        else if (timer >= 0.5f && timer < 0.65f)
-        {
-            score += 80;
-        }
-        else if (timer >= 0.65f && timer < 0.75f)
-        {
-            score += 60;
-        }
-        else if (timer >= 0.75f && timer < 0.85f)
-        {
-            score += 40;
+            score += 1;
         }
         else
         {
-            score += 20;
+            score += (int)addScore +1;
         }
+        //if (timer < 0.5f)
+        //{
+        //    score += 100;
+        //}
+        //else if (timer >= 0.5f && timer < 0.65f)
+        //{
+        //    score += 80;
+        //}
+        //else if (timer >= 0.65f && timer < 0.75f)
+        //{
+        //    score += 60;
+        //}
+        //else if (timer >= 0.75f && timer < 0.85f)
+        //{
+        //    score += 40;
+        //}
+        //else
+        //{
+        //    score += 20;
+        //}
 
         print(score);
-        scoreText.text = "Score:" + score;
+        scoreText.text = "Score: " + score;
     }
 }
