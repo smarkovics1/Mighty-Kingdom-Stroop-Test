@@ -20,17 +20,18 @@ public class GameController: MonoBehaviour
     public TextMeshProUGUI timerText;
 
     //scoring variables
-    int correct = 0;
-    int inCorrect = 0;
-    int roundNumber = 0;
-    int score = 0;
+    private int correct = 0;
+    private int inCorrect = 0;
+    private int roundNumber = 0;
+    private int score = 0;
 
     public enum ColourOptions { Red, Blue, Green, Yellow };
     private int numColours = 4;
     public ColourOptions colourChosen;
 
-    int randomColourInt;
+    private int randomColourInt;
 
+    //game and result screen objects
     public GameObject mainScreen;
     public GameObject resultScreen;
 
@@ -39,7 +40,9 @@ public class GameController: MonoBehaviour
 
     void Start()
     {
+        //set score to 0 at start of game
         score = 0;
+
         //add colours and text to dictionary for use later
         colourInfo.Add("Red", Color.red);
         colourInfo.Add("Blue", Color.blue);
@@ -61,7 +64,7 @@ public class GameController: MonoBehaviour
     {
         //timer run and display time taken to player
         timer += Time.deltaTime;
-        timerText.text = "Time: "+ timer.ToString("F1");
+        timerText.text = "Time: " + timer.ToString("F1");
     }
 
     public void CreateQuestion()
@@ -124,7 +127,7 @@ public class GameController: MonoBehaviour
         {
             //add to correct;
             correct++;
-            
+
             //add score depending on time
             AddScore();
 
@@ -135,7 +138,7 @@ public class GameController: MonoBehaviour
         {
             //add to incorrect
             inCorrect++;
-            
+
             //create new question
             CreateQuestion();
         }
